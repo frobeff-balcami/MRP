@@ -3102,9 +3102,9 @@ function cargarDatosYInicializar(){
   if(statusEl) statusEl.textContent = 'Actualizando datos...';
 
   Promise.all([
-    fetch(urlSheet('MRP_Stock')).then(function(r){ return r.text(); }),
-    fetch(urlSheet('MRP_OC')).then(function(r){ return r.text(); }),
-    fetch(urlSheet('MRP_OP')).then(function(r){ return r.text(); })
+    fetch(urlSheet('Stock')).then(function(r){ return r.text(); }),
+    fetch(urlSheet('OCs - abiertas')).then(function(r){ return r.text(); }),
+    fetch(urlSheet('OPs - abiertas')).then(function(r){ return r.text(); })
   ]).then(function(results){
     // 1. Actualizar stocks por odoo_id
     var stockRows = parseCsv(results[0]);
