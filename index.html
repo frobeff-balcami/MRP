@@ -2208,13 +2208,21 @@ function renderGanttStock(){
 
       // Si hay llegada de material esta semana, pintar la celda con color especial
       var cellTitle = '';
+      // Siempre mostrar consumo en el tooltip
+      var demRound = Math.round(dem * 100) / 100;
+      if(demRound > 0){
+        cellTitle += 'Consumo S'+s+': ' + (Number.isInteger(demRound) ? demRound : demRound.toFixed(2)) + (esMP ? 'm' : 'u') + '\n';
+        cellTitle += 'Stock al final: ' + Math.round(sf) + (esMP ? 'm' : 'u');
+      } else {
+        cellTitle += 'Sin demanda esta semana\nStock: ' + Math.round(sf) + (esMP ? 'm' : 'u');
+      }
       if(entra > 0){
         var llSem = llegadas.filter(function(l){ return l.sem===s; });
         var algunaVencida = llSem.some(function(l){ return l.vencida; });
         // Sobreescribir colores para resaltar llegada
         cellBg  = algunaVencida ? '#FFE0B2' : '#BBDEFB';   // naranja claro / azul claro
         cellTxt = algunaVencida ? '#7B3F00' : '#0D47A1';
-        cellTitle = llSem.map(function(l){
+        cellTitle += '\n' + llSem.map(function(l){
           return l.ref+': +'+l.qty+(l.vencida?' (vencida, esperada '+l.fechaOriginal+')':' (llega '+l.fechaOriginal+')');
         }).join('\n');
       }
