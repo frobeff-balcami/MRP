@@ -3357,11 +3357,17 @@ function buildAgenteOCs(){
   function _demEnSemana(r, s){
     var procesoIt = r.proceso || '';
     if(procesoIt === 'MP'){
-      // MP: usar demanda anual prorrateada (sería más preciso cascada pero costoso)
+      // MP: cascada BOM, no prorrateado
       return PMP_BASE[s] * (r.dem/TOTAL_BASE);
     }
-    var destinoIt = r.destino || 'ENSAMBLE';
-    var offset = (destinoIt === 'SOLDADURA') ? 2 : 1;
+    // Offset según etiqueta/proceso: cada pieza se fabrica LT semanas antes del ensamble
+    var etiq = ProcesoAEtiqueta(procesoIt, r.proveedor || '');
+    var LT_POR_ETIQ = {
+      'Torneria Interna': 4, 'Fabricacion Interna': 1,
+      'Corte laser': 3, 'Corte laser+Plegado': 4,
+      'Molde': 4, 'COMPRADO': 0, 'TORNO_PROV': 4
+    };
+    var offset = LT_POR_ETIQ[etiq] !== undefined ? LT_POR_ETIQ[etiq] : 0;
     return (PMP_BASE[s + offset] || 0) * (CANT_POR_MAQ[r.nombre] || 1);
   }
   function demDesdeH(r,semI,h){
