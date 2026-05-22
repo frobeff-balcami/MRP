@@ -3361,7 +3361,7 @@ function buildAgenteOCs(){
       return PMP_BASE[s] * (r.dem/TOTAL_BASE);
     }
     // Offset según etiqueta/proceso: cada pieza se fabrica LT semanas antes del ensamble
-    var etiq = ProcesoAEtiqueta(procesoIt, r.proveedor || '');
+    var etiq = _mapProcesoAEtiqueta(procesoIt, r.proveedor || '');
     var LT_POR_ETIQ = {
       'Torneria Interna': 4, 'Fabricacion Interna': 1,
       'Corte laser': 3, 'Corte laser+Plegado': 4,
