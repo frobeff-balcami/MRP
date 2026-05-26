@@ -1981,7 +1981,11 @@ function renderGanttStockRow(nombre,newSq){
       if(esMP){
         dem = consumoMP[s] || 0;
       } else {
-        var offset = (destinoIt === 'SOLDADURA') ? 2 : 1;
+        var offset;
+        if(procesoIt === 'COMPRADO') offset = 0;
+        else if(procesoIt === 'LASER') offset = 3;
+        else if(procesoIt === 'TORNO_PROV' || procesoIt === 'TORNERIA') offset = 4;
+        else offset = 0;
         var semDest = s + offset;
         dem = (PMP_BASE[semDest] || 0) * (CANT_POR_MAQ[r.nombre] || 1);
       }
@@ -2194,7 +2198,11 @@ function renderGanttStock(){
       if(esMP){
         dem = consumoMP[s] || 0;
       } else {
-        var offset = (destinoIt === 'SOLDADURA') ? 2 : 1;
+        var offset;
+        if(procesoIt === 'COMPRADO') offset = 0;
+        else if(procesoIt === 'LASER') offset = 3;
+        else if(procesoIt === 'TORNO_PROV' || procesoIt === 'TORNERIA') offset = 4;
+        else offset = 0;
         var semDest = s + offset;
         dem = (pmpSim[semDest] || 0) * (CANT_POR_MAQ[r.nombre] || 1);
       }
@@ -4742,7 +4750,11 @@ function renderGanttStockSimulado(){
       if(esMP){
         dem = consumoMP[s] || 0;
       } else {
-        var offset = (destinoIt === 'SOLDADURA') ? 2 : 1;
+        var offset;
+        if(procesoIt === 'COMPRADO') offset = 0;
+        else if(procesoIt === 'LASER') offset = 3;
+        else if(procesoIt === 'TORNO_PROV' || procesoIt === 'TORNERIA') offset = 4;
+        else offset = 0;
         var semDest = s + offset;
         dem = (pmpSim[semDest] || 0) * (CANT_POR_MAQ[r.nombre] || 1);
       }
